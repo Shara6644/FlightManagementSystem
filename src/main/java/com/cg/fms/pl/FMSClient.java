@@ -35,12 +35,8 @@ public class FMSClient {
 			try {
 			System.out.println(" Enter your choice ");
 			choice =scanner.nextInt();
-			}
-			catch(Exception e)
-			{
-				System.out.println("enter a valid choice");
-				scanner.nextLine();
-			}
+			
+			
 			
 			switch(choice) {
 			case 1:
@@ -50,7 +46,7 @@ public class FMSClient {
 				System.out.println("1.1001 2.1002 3.1003");
 				try {
 				int flightNumber = scanner .nextInt();
-  			     scanner.nextLine();
+  			    scanner.nextLine();
 				Flight flight= Util.searchSourceFlight(flightNumber);
 				System.out.println(" Enter the source airport code from the given list");
 				System.out.println("1.HYD 2.MUM 3.BEN");
@@ -85,7 +81,7 @@ public class FMSClient {
 				catch(Exception e)
 				{
 					System.out.println("enter a valid choice");
-					
+					 scanner.nextLine();
 				}
                   break;
                
@@ -120,7 +116,7 @@ public class FMSClient {
 				catch(Exception e)
 				{
 					System.out.println("enter a valid choice");
-					
+					scanner.nextLine();
 				}
 				
                  break;
@@ -160,7 +156,7 @@ public class FMSClient {
 				catch(Exception e)
 				{
 					System.out.println("enter a valid choice");
-					
+					scanner.nextLine();
 				}
 				break;
 			case 4 :
@@ -178,7 +174,7 @@ public class FMSClient {
 				catch(Exception e)
 				{
 					System.out.println("enter a valid choice");
-					
+					scanner.nextLine();
 				}
 			    break;
 			case 5:try
@@ -197,7 +193,7 @@ public class FMSClient {
 			catch(Exception e)
 			{
 				System.out.println("enter a valid choice");
-				
+				scanner.nextLine();
 			}
 			    break;
 			case 6: 
@@ -236,13 +232,20 @@ public class FMSClient {
 				catch(Exception e)
 				{
 					System.out.println("enter a valid choice");
-					
+					scanner.nextLine();
 				}
 				break;
 			case 7: System.out.println("THANK YOU");
 			 return;
 			
 		}
+			}
+			catch(InputMismatchException e)
+        	{
+        		System.out.println(" Choice should be integer ");
+        		scanner.nextLine();
+        	
+        	}
 			
 			
 			

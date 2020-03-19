@@ -20,15 +20,15 @@ import com.cg.fms.flightexception.FlightException;
 class FmsTest {
 
 	ScheduledFlightDao dao = null;
-	Flight f1 = new Flight(1001, "BUSSINESS", "INS", 100);
+	Flight flight1 = new Flight(1001, "BUSSINESS", "INS", 100);
 
 	Airport s1 = new Airport("Rajiv Gandhi International Airport", "HYD", "Hyderabad");
 
 	Airport d1 = new Airport("chathrapathi Shivaji International Airport","MUM","Mumbai");
-	DateTime x = new DateTime("10-02-2019","20");
+	DateTime x = new DateTime("10-02-2019","20:00");
 
 	Schedule s = new Schedule(s1, d1, x, new DateTime());
-	ScheduledFlight sf = new ScheduledFlight(f1, 0, s);
+	ScheduledFlight sf = new ScheduledFlight(flight1, 0, s);
 
 	@BeforeEach
 	public void setUp() {
@@ -45,50 +45,85 @@ class FmsTest {
 
 	}
 	@Test
-	public void testFindEmployeeByIdNotExist () 
-	{
-		
-		
-	assertThrows(FlightException.class, ()->dao.scheduleFlight(sf));
-//		int num = dao.scheduleFlight(sf);
-//
-//		assertNotNull(num);
-	}
+	void testScheduleFlight1() throws FlightException {
 
+		int num = dao.scheduleFlight(sf);
+
+		assertEquals(1001,num);
+
+	}
+	@Test
+	void testScheduleFlight2() throws FlightException {
+
+		int num = dao.scheduleFlight(sf);
+
+		assertNotNull(num);
+
+	}
+	
+	
 
 	@Test
-	void validateViewScheduledFlight() throws FlightException {
+	void testDelete() throws Exception {
 
 		dao.scheduleFlight(sf);
+		
 		List<ScheduledFlight> list = dao.viewScheduledFlight();
+		
+		dao.deleteScheduledFlight(sf.getFlight().getFlightNumber());
+		int a = list.size();
+		System.out.println( a);
 		assertEquals(1, list.size());
-
 	}
-
-	//@Test
-//	void testDelete() throws Exception {
-//
-//		dao.scheduleFlight(sf);
-//		List<ScheduledFlight> list = dao.viewScheduledFlight();
-//		dao.deleteScheduledFlight(sf.getFlight().getFlightNumber());
-//		int a = list.size();
-//		assertTrue(a == 0);
-//	}
 
 	@Test
 	void testscheduleFlight() throws FlightException {
 
 		dao.scheduleFlight(sf);
 		Flight a = dao.viewScheduledFlights(sf.getFlight().getFlightNumber());
-		assertEquals(1001, a.getFlightNumber());
+		assertNotNull(a);
 
 	}
+	
+	@Test
+	void testscheduleFlight1() throws FlightException {
+
+		dao.scheduleFlight(sf);
+		Flight a = dao.viewScheduledFlights(sf.getFlight().getFlightNumber());
+		assertEquals(1001,a.getFlightNumber());
+
+	}
+	@Test
+	void testscheduleFlight2() throws FlightException {
+
+		dao.scheduleFlight(sf);
+		Flight a = dao.viewScheduledFlights(sf.getFlight().getFlightNumber());
+		assertTrue(1001==a.getFlightNumber());
+
+	}
+	
     @Test
 	void testmodifyScheduledFlight() throws FlightException{
 		
 		dao.scheduleFlight(sf);
-		ScheduledFlight g=dao.modifyScheduledFlight(f1, s, 10);
-		assertEquals(f1.getFlightNumber(),g.getFlight().getFlightNumber());
+		ScheduledFlight g=dao.modifyScheduledFlight(flight1, s, 10);
+		assertEquals(flight1.getFlightNumber(),g.getFlight().getFlightNumber());
+		
+	}
+    @Test
+	void testmodifyScheduledFlight1() throws FlightException{
+		
+		dao.scheduleFlight(sf);
+		ScheduledFlight g=dao.modifyScheduledFlight(flight1, s, 10);
+		assertTrue(g.getFlight().getFlightNumber()>0);
+		
+	}
+    @Test
+	void testmodifyScheduledFlight2() throws FlightException{
+		
+		dao.scheduleFlight(sf);
+		ScheduledFlight g=dao.modifyScheduledFlight(flight1, s, 10);
+		assertNotNull(g);
 		
 	}
     @Test
@@ -100,4 +135,24 @@ class FmsTest {
     	assertEquals(1,list.size());
     	
     }
+    @Test
+    void testviewSchedulesFlights1() throws FlightException
+    {
+    	dao.scheduleFlight(sf);
+    	List<ScheduledFlight> list = dao.viewScheduledFlights(s1, d1, x);
+    	
+    	assertTrue(list.size()>0);
+    	
+    }
+    @Test
+    void testviewSchedulesFlights2() throws FlightException
+    {
+    	dao.scheduleFlight(sf);
+    	List<ScheduledFlight> list = dao.viewScheduledFlights(s1, d1, x);
+    	
+    	assertNotNull(list);
+    	
+    }
+    
+   
 }
