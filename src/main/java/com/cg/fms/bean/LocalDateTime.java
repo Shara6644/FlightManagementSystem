@@ -1,15 +1,15 @@
 package com.cg.fms.bean;
 
-public class DateTime {
+public class LocalDateTime {
 	
 	private String date;
 	private String hour;
-	public DateTime( String date,String hour) {
+	public LocalDateTime( String date,String hour) {
 		super();
 		this.date = date;
 		this.hour = hour;
 	}
-	public DateTime() {
+	public LocalDateTime() {
 		super();
 	}
 	public String getDate() {

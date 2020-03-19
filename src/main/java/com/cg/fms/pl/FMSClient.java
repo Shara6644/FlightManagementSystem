@@ -1,11 +1,13 @@
 package com.cg.fms.pl;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 
 import com.cg.fms.bean.Airport;
-import com.cg.fms.bean.DateTime;
+
 import com.cg.fms.bean.Flight;
 import com.cg.fms.bean.Schedule;
 import com.cg.fms.bean.ScheduledFlight;
@@ -56,16 +58,20 @@ public class FMSClient {
 				System.out.println("1.HYD 2.MUM 3.BEN");
 				String destinationAirportCode = scanner .nextLine();
 				Airport destinationAirport= Util.searchDestAirport( destinationAirportCode );
-				System.out.println(" enter the Arrival Date and Time ");
-				String arrivalDate = scanner.next();
-				String arrivalTime=scanner.next();
-				System.out.println(" enter the Destination Date and Time ");
-				String destinationDate = scanner.next();
-				String destinationTime=scanner.next();
-				DateTime arrivalDateAndTime=new DateTime(arrivalDate,arrivalTime);
-				DateTime destinationDateAndTime=new DateTime(destinationDate,destinationTime);
+				System.out.println(" enter the Arrival Date and Time in the following format yyyy-mm-ddThh:mm:ss ");
+				String arrivalDateAndTimeString = scanner.next();
+//				String arrivalTime=scanner.next();
+				System.out.println(" enter the Destination Date and Time  in the following format yyyy-mm-ddThh:mm:ss ");
+				String destinationDateAndTimeString = scanner.next();
+//				String destinationTime=scanner.next();
+//				
+				 DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+				 LocalDateTime arrivalDateAndTime =LocalDateTime.parse(arrivalDateAndTimeString, formatter);
+               	LocalDateTime destinationDateAndTime =LocalDateTime.parse(destinationDateAndTimeString , formatter);
+				 
 				Schedule schedule = new Schedule(sourceAirport,destinationAirport,arrivalDateAndTime,destinationDateAndTime);
 				System.out.println(" Enter the available seats ");
+				scanner.nextLine();
 				int numberOfSeats = scanner.nextInt();
 				scheduledFlight.setFlight(flight);
 				scheduledFlight.setSchedule(schedule);
@@ -100,13 +106,17 @@ public class FMSClient {
 				Airport destinationAirport =schedule.getDestinationAirport();
 				String sourceAiportCode =sourceAirport.getAirportCode();
 				String destinationAirportCode =destinationAirport.getAirportCode();
-				DateTime arrivalDateAndTime=schedule.getArrivalTime();
-				DateTime destinationDateAndTime=schedule.getDepartureTime();
-				String arrivalDate =arrivalDateAndTime.getDate();
-				String arrivalTime = arrivalDateAndTime.getHour();
-				String departureDate =destinationDateAndTime.getDate();
-				String departureTime =destinationDateAndTime.getHour();
-					System.out.println(flightNumber+" "+sourceAiportCode+" "+" "+destinationAirportCode+" "+arrivalDate+" "+arrivalTime+" "+departureDate+" "+departureTime);
+				LocalDateTime localDateTime = schedule.getArrivalDateAndTime();
+				String str = localDateTime.toString();
+				LocalDateTime localDateTime1 = schedule.getDepartureDateAndTime();
+				String str1 = localDateTime.toString();
+//				LocalDateTime arrivalDateAndTime=schedule.getArrivalTime();
+//				LocalDateTime destinationDateAndTime=schedule.getDepartureTime();
+//				String arrivalDate =arrivalDateAndTime.getDate();
+//				String arrivalTime = arrivalDateAndTime.getHour();
+//				String departureDate =destinationDateAndTime.getDate();
+//				String departureTime =destinationDateAndTime.getHour();
+				System.out.println(flightNumber+" "+sourceAiportCode+" "+" "+destinationAirportCode+" "+str+" " +str1);
 					
 				}
 				}
@@ -136,19 +146,22 @@ public class FMSClient {
 				System.out.println("  Enter the destination airport codefrom the given list");
 				System.out.println("1.HYD 2.MUM 3.BEN");
 				String destinationAirportCode = scanner .nextLine();
-				Airport ddestinationAirport= Util.searchDestAirport( destinationAirportCode );
-				System.out.println(" enter the Arrival Date and Time ");
-				String arrivalDate = scanner.next();
-				String arrivalTime=scanner.next();
-				System.out.println(" enter the Destination Date and Time ");
-				String destinationDate = scanner.next();
-				String destinationTime=scanner.next();
-				DateTime arrivalDateAndTime=new DateTime(arrivalDate,arrivalTime);
-				DateTime destinationDateAndTime=new DateTime(destinationDate,destinationTime);
-				Schedule schedule = new Schedule(sourceAirport,ddestinationAirport,arrivalDateAndTime,destinationDateAndTime);
+				Airport destinationAirport= Util.searchDestAirport( destinationAirportCode );
+				System.out.println(" enter the Arrival Date and Time in the following format yyyy-mm-ddThh:mm:ss ");
+				String arrivalDateAndTimeString = scanner.next();
+//				String arrivalTime=scanner.next();
+				System.out.println(" enter the Destination Date and Time  in the following format yyyy-mm-ddThh:mm:ss ");
+				String destinationDateAndTimeString = scanner.next();
+//				String destinationTime=scanner.next();
+//				
+				 DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+				 LocalDateTime arrivalDateAndTime =LocalDateTime.parse(arrivalDateAndTimeString, formatter);
+               	LocalDateTime destinationDateAndTime =LocalDateTime.parse(destinationDateAndTimeString , formatter);
+				 
+				Schedule schedule = new Schedule(sourceAirport,destinationAirport,arrivalDateAndTime,destinationDateAndTime);
 				System.out.println(" Enter the available seats ");
 				int numberOfSeats = scanner.nextInt();
-				service.modifyScheduledFlight(flight, schedule, numberOfSeats);
+//				service.modifyScheduledFlight(flight, schedule, numberOfSeats);
 				System.out.println("Flight is scheduled successfully");
 				}catch(FlightException e) {
 					System.err.println(e.getMessage());
@@ -177,7 +190,8 @@ public class FMSClient {
 					scanner.nextLine();
 				}
 			    break;
-			case 5:try
+			case 5:
+				try
 			{
 				System.out.println(" Enter the Flight number ");
 				int flightNumber=scanner.nextInt();
@@ -197,7 +211,7 @@ public class FMSClient {
 			}
 			    break;
 			case 6: 
-				try {
+			try {
 				scanner.nextLine();
 				System.out.println(" Enter the source airport code from the given list");
 				System.out.println("1.HYD 2.MUM 3.BEN");
@@ -207,23 +221,27 @@ public class FMSClient {
 				System.out.println("1.HYD 2.MUM 3.BEN");
 				String sourceAirportCode=scanner.nextLine();
 				Airport destinationAirport=Util.searchDestAirport(sourceAirportCode);
-				System.out.println("Enter Date");
-				String date=scanner.nextLine();
-				System.out.println("Entertime");
-				String time=scanner.nextLine();
-				DateTime dt1=new DateTime(date,time);
-				List<ScheduledFlight> listOfScheduledFlights=service.viewScheduledFlights(sourceAirport, destinationAirport,dt1);
-				System.out.println(listOfScheduledFlights.size());
-				for(ScheduledFlight scheduledFlights: listOfScheduledFlights)
+				System.out.println(" enter the Arrival Date and Time in the following format yyyy-mm-ddThh:mm:ss ");
+				String arrivalDateAndTimeString = scanner.next();
+				DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+				 LocalDateTime arrivalDateAndTime =LocalDateTime.parse(arrivalDateAndTimeString, formatter);
+//				System.out.println("Enter Date");
+//				String date=scanner.nextLine();
+//				System.out.println("Entertime");
+//			//	String time=scanner.nextLine();
+			//	LocalDateTime dt1=new LocalDateTime(date,time);
+				List<ScheduledFlight> listOfScheduledFlights=service.viewScheduledFlights(sourceAirport, destinationAirport,arrivalDateAndTime);
+			//	System.out.println(listOfScheduledFlights.size());
+			for(ScheduledFlight scheduledFlights: listOfScheduledFlights)
 				{
 					int flightNumber=scheduledFlights.getFlight().getFlightNumber();
 					String flightModel =scheduledFlights.getFlight().getFlightModel();
 					String carrierName=scheduledFlights.getFlight().getCarrierName();
-					int seatCapacity=scheduledFlights.getFlight().getSeatCapacity();
+				int seatCapacity=scheduledFlights.getFlight().getSeatCapacity();
 					System.out.println(flightNumber+" "+flightModel+" "+carrierName+" "+seatCapacity);
-				}
+			}
 				
-				
+			
 			}
 			catch(FlightException e)
 				{

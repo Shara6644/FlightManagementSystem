@@ -73,7 +73,8 @@ public class Util {
 	{
 
 	Airport destinationAirport =null;
-	if(listOfSourceAirports.stream().anyMatch(p->p.getAirportCode().equals(destinationAirportCode))) {
+	if(listOfSourceAirports.stream().anyMatch(p->p.getAirportCode().equals(destinationAirportCode))) 
+	{
 		 destinationAirport =listOfSourceAirports.stream().filter(p->p.getAirportCode().equals(destinationAirportCode)).findFirst().get();
 		
 	}

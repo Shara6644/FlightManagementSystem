@@ -2,6 +2,8 @@ package com.cg.fms.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 
 import com.cg.fms.bean.Airport;
-import com.cg.fms.bean.DateTime;
+
 import com.cg.fms.bean.Flight;
 import com.cg.fms.bean.Schedule;
 import com.cg.fms.bean.ScheduledFlight;
@@ -25,10 +27,16 @@ class FmsTest {
 	Airport s1 = new Airport("Rajiv Gandhi International Airport", "HYD", "Hyderabad");
 
 	Airport d1 = new Airport("chathrapathi Shivaji International Airport","MUM","Mumbai");
-	DateTime x = new DateTime("10-02-2019","20:00");
-
-	Schedule s = new Schedule(s1, d1, x, new DateTime());
-	ScheduledFlight sf = new ScheduledFlight(flight1, 0, s);
+//	LocalDateTime x = new LocalDateTime("2018-07-14T17:45:55.9483536");
+//	LocalDateTime y = new LocalDateTime("10-02-2019","21:00");
+//	Schedule s = new Schedule(s1, d1, x, new LocalDateTime());
+	 DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+      String  arrivalDateAndTimeString ="2018-07-14T17:45:55.9483536";
+	 LocalDateTime arrivalDateAndTime =LocalDateTime.parse(arrivalDateAndTimeString, formatter);
+	 String  destinationlDateAndTimeString ="2018-07-14T17:45:55.9483536";
+	 LocalDateTime destinationDateAndTime =LocalDateTime.parse(arrivalDateAndTimeString, formatter);
+	Schedule schedule = new Schedule(s1,d1,arrivalDateAndTime,destinationDateAndTime);
+	ScheduledFlight sf = new ScheduledFlight(flight1, 0, schedule);
 
 	@BeforeEach
 	public void setUp() {
@@ -106,7 +114,7 @@ class FmsTest {
 	void testmodifyScheduledFlight() throws FlightException{
 		
 		dao.scheduleFlight(sf);
-		ScheduledFlight g=dao.modifyScheduledFlight(flight1, s, 10);
+		ScheduledFlight g=dao.modifyScheduledFlight(flight1, schedule, 10);
 		assertEquals(flight1.getFlightNumber(),g.getFlight().getFlightNumber());
 		
 	}
@@ -114,7 +122,7 @@ class FmsTest {
 	void testmodifyScheduledFlight1() throws FlightException{
 		
 		dao.scheduleFlight(sf);
-		ScheduledFlight g=dao.modifyScheduledFlight(flight1, s, 10);
+		ScheduledFlight g=dao.modifyScheduledFlight(flight1, schedule, 10);
 		assertTrue(g.getFlight().getFlightNumber()>0);
 		
 	}
@@ -122,7 +130,7 @@ class FmsTest {
 	void testmodifyScheduledFlight2() throws FlightException{
 		
 		dao.scheduleFlight(sf);
-		ScheduledFlight g=dao.modifyScheduledFlight(flight1, s, 10);
+		ScheduledFlight g=dao.modifyScheduledFlight(flight1, schedule, 10);
 		assertNotNull(g);
 		
 	}
@@ -130,7 +138,7 @@ class FmsTest {
     void testviewSchedulesFlights() throws FlightException
     {
     	dao.scheduleFlight(sf);
-    	List<ScheduledFlight> list = dao.viewScheduledFlights(s1, d1, x);
+    	List<ScheduledFlight> list = dao.viewScheduledFlights(s1, d1, arrivalDateAndTime);
     	
     	assertEquals(1,list.size());
     	
@@ -139,7 +147,7 @@ class FmsTest {
     void testviewSchedulesFlights1() throws FlightException
     {
     	dao.scheduleFlight(sf);
-    	List<ScheduledFlight> list = dao.viewScheduledFlights(s1, d1, x);
+    	List<ScheduledFlight> list = dao.viewScheduledFlights(s1, d1, arrivalDateAndTime);
     	
     	assertTrue(list.size()>0);
     	
@@ -148,7 +156,7 @@ class FmsTest {
     void testviewSchedulesFlights2() throws FlightException
     {
     	dao.scheduleFlight(sf);
-    	List<ScheduledFlight> list = dao.viewScheduledFlights(s1, d1, x);
+    	List<ScheduledFlight> list = dao.viewScheduledFlights(s1, d1,arrivalDateAndTime);
     	
     	assertNotNull(list);
     	

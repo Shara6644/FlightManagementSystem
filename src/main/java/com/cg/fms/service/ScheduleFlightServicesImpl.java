@@ -1,13 +1,14 @@
 package com.cg.fms.service;
 
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 import com.cg.fms.bean.Airport;
-import com.cg.fms.bean.DateTime;
+
 import com.cg.fms.bean.Flight;
 import com.cg.fms.bean.Schedule;
 import com.cg.fms.bean.ScheduledFlight;
@@ -20,6 +21,7 @@ public class ScheduleFlightServicesImpl implements  ScheduleFlightServices{
 			
 	public ScheduleFlightServicesImpl() {
 		daoimpl=new ScheduledFlightDaoImpl();
+		
 	}
 	Map<Integer,ScheduledFlight> schedflight = new HashMap<Integer,ScheduledFlight>();
 	@Override
@@ -37,7 +39,7 @@ public class ScheduleFlightServicesImpl implements  ScheduleFlightServices{
 	}
 
 	@Override
-	public List<ScheduledFlight> viewScheduledFlights(Airport source, Airport destination, DateTime date)  throws FlightException{
+	public List<ScheduledFlight> viewScheduledFlights(Airport source, Airport destination, LocalDateTime date)  throws FlightException{
 		String str1=source.getAirportCode();
 		String str2=destination.getAirportCode();
 		if(!(str1.matches("[A-Z]{3}"))&&(str2.matches("[A-Z]{3}")))
