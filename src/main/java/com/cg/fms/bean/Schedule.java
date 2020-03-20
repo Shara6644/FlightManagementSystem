@@ -11,18 +11,27 @@ public class Schedule {
 	
 	
 	
-	public Schedule( Airport sourceAirport, Airport destinationAirport, LocalDateTime arrivalDateAndTime, LocalDateTime departureDateAndTime) {
-		super();
-		
-		this.sourceAirport = sourceAirport;
-		this.destinationAirport = destinationAirport;
-        this.arrivalDateAndTime = arrivalDateAndTime;
-	this.departureDateAndTime = departureDateAndTime;
-	}
+//	public Schedule( Airport sourceAirport, Airport destinationAirport, LocalDateTime arrivalDateAndTime, LocalDateTime departureDateAndTime) {
+//		super();
+//		
+//		this.sourceAirport = sourceAirport;
+//		this.destinationAirport = destinationAirport;
+//        this.arrivalDateAndTime = arrivalDateAndTime;
+//	this.departureDateAndTime = departureDateAndTime;
+//	}
 	public Schedule() {
 		super();
 	}
 	
+	public Schedule(Airport sourceAirport, Airport destinationAirport, LocalDateTime arrivalDateAndTime,
+		LocalDateTime departureDateAndTime) {
+	super();
+	this.sourceAirport = sourceAirport;
+	this.destinationAirport = destinationAirport;
+	this.arrivalDateAndTime = arrivalDateAndTime;
+	this.departureDateAndTime = departureDateAndTime;
+}
+
 	public Airport getSourceAirport() {
 		return sourceAirport;
 	}

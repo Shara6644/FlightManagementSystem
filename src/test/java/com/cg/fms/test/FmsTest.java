@@ -30,10 +30,10 @@ class FmsTest {
 //	LocalDateTime x = new LocalDateTime("2018-07-14T17:45:55.9483536");
 //	LocalDateTime y = new LocalDateTime("10-02-2019","21:00");
 //	Schedule s = new Schedule(s1, d1, x, new LocalDateTime());
-	 DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-      String  arrivalDateAndTimeString ="2018-07-14T17:45:55.9483536";
+	 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+      String  arrivalDateAndTimeString ="01/11/2017 19:45";
 	 LocalDateTime arrivalDateAndTime =LocalDateTime.parse(arrivalDateAndTimeString, formatter);
-	 String  destinationlDateAndTimeString ="2018-07-14T17:45:55.9483536";
+	 String  destinationlDateAndTimeString ="01/11/2017 20:45";
 	 LocalDateTime destinationDateAndTime =LocalDateTime.parse(arrivalDateAndTimeString, formatter);
 	Schedule schedule = new Schedule(s1,d1,arrivalDateAndTime,destinationDateAndTime);
 	ScheduledFlight sf = new ScheduledFlight(flight1, 0, schedule);
