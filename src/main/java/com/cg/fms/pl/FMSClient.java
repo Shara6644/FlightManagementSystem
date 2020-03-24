@@ -1,4 +1,5 @@
 package com.cg.fms.pl;
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
@@ -108,6 +109,10 @@ public class FMSClient {
 					
 					
 				}
+				catch(DateTimeException e)
+				{
+					System.out.println("enter a valid date");
+				}
 				catch(Exception e)
 				{
 					System.out.println("enter a valid details");
@@ -201,6 +206,10 @@ public class FMSClient {
 				}catch(FlightException e) {
 					System.err.println(e.getMessage());
 				}
+				catch(DateTimeException e)
+				{
+					System.out.println("enter a valid date");
+				}
 				catch(Exception e)
 				{
 					System.out.println("enter a details");
@@ -287,6 +296,10 @@ public class FMSClient {
 				{
 				System.out.println(e.getMessage());
 				}
+			catch(DateTimeException e)
+			{
+				System.out.println("enter a valid date");
+			}
 				catch(Exception e)
 				{
 					System.out.println("enter a valid details");
