@@ -44,7 +44,7 @@ public class ScheduleFlightServicesImpl implements  ScheduleFlightServices{
 		String str1=source.getAirportCode();
 		String str2=destination.getAirportCode();
 		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-		if(!(str1.matches("[A-Z]{3}"))&&(str2.matches("[A-Z]{3}")))
+		if(!((str1.matches("[A-Z]{3}"))&&(str2.matches("[A-Z]{3}"))&&(date.format(formatter).matches("^(1[0-2]|0[1-9])/(3[01]" + "|[12][0-9]|0[1-9])/[0-9]{4}$" +"([01]?[0-9]|2[0-3]):[0-5][0-9]"))))
 		{
 	     throw new FlightException("Airport Code should be of 3 Characters in Upper Case( MUM, HYD, BEN )");
 		}
@@ -53,7 +53,7 @@ public class ScheduleFlightServicesImpl implements  ScheduleFlightServices{
 //			throw new FlightException("date and time should be in this format dd-MM-yyyy HH:mm");
 //		}
 		
-		
+	//	&&(date.format(formatter).matches("^(1[0-2]|0[1-9])/(3[01]" + "|[12][0-9]|0[1-9])/[0-9]{4}$" +"([01]?[0-9]|2[0-3]):[0-5][0-9]")
 		return daoimpl.viewScheduledFlights(source, destination, date);
 	}
 

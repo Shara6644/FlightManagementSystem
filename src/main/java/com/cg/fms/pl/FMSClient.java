@@ -23,6 +23,7 @@ public class FMSClient {
 		
 		
 		int choice =0;
+		Boolean flag;
 		
 		while(choice!=7) 
 			{
@@ -38,9 +39,11 @@ public class FMSClient {
 			System.out.println(" Enter your choice ");
 			choice =scanner.nextInt();
 			
-			
-			
+			if(choice>7||choice<1) {
+			System.err.println("Choice must be 1 to 7");
+			}
 			switch(choice) {
+			
 			case 1:
 				
 			    ScheduledFlight scheduledFlight=new ScheduledFlight();
@@ -49,6 +52,7 @@ public class FMSClient {
 				try {
 				int flightNumber = scanner .nextInt();
   			    scanner.nextLine();
+  			    
 				Flight flight= Util.searchSourceFlight(flightNumber);
 				System.out.println(" Enter the source airport code from the given list");
 				System.out.println("1.HYD 2.MUM 3.BEN");
@@ -58,11 +62,28 @@ public class FMSClient {
 				System.out.println("1.HYD 2.MUM 3.BEN");
 				String destinationAirportCode = scanner .nextLine();
 				Airport destinationAirport= Util.searchDestAirport( destinationAirportCode );
-				System.out.println(" enter the Arrival Date and Time in the following format dd/MM/yyyy HH:mm ");
-				String arrivalDateAndTimeString = scanner.nextLine();
+				//System.out.println(" enter the Arrival Date and Time in the following format dd/MM/yyyy HH:mm ");
+				String arrivalDateAndTimeString;
+				
+					System.out.println(" enter the Arrival Date and Time in the following format dd/MM/yyyy HH:mm ");
+				 arrivalDateAndTimeString = scanner.nextLine();
+				//flag = Util.validateDate(arrivalDateAndTimeString);
+				
+//				if(!Util.validateDate(arrivalDateAndTimeString))
+//				{
+//					
+//					System.out.println("invalid date");
+//				}
+				
+			//	while(Util.validateDate(arrivalDateAndTimeString)==false);
 //				String arrivalTime=scanner.next();
 				System.out.println(" enter the Destination Date and Time  in the following format dd/MM/yyyy HH:mm ");
 				String destinationDateAndTimeString = scanner.nextLine();
+//				flag = Util.validateDate(destinationDateAndTimeString);
+//				if(!flag)
+//				{
+//					System.out.println("invalid date");
+//				}
 //				String destinationTime=scanner.next();
 			
 				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -84,6 +105,7 @@ public class FMSClient {
 				
 				catch(FlightException e) {
 					System.out.println(e.getMessage());
+					
 					
 				}
 				catch(Exception e)
@@ -152,12 +174,22 @@ public class FMSClient {
 				Airport destinationAirport= Util.searchDestAirport( destinationAirportCode );
 				System.out.println(" enter the Arrival Date and Time in the following format dd/MM/yyyy HH:mm ");
 				String arrivalDateAndTimeString = scanner.next();
+//				 flag = Util.validateDate(arrivalDateAndTimeString);
+//				if(!flag)
+//				{
+//					System.out.println("invalid date");
+//				}
 //				String arrivalTime=scanner.next();
 				System.out.println(" enter the Destination Date and Time  in the following format dd/MM/yyyy HH:mm");
 				String destinationDateAndTimeString = scanner.next();
+//				 flag = Util.validateDate(arrivalDateAndTimeString);
+//				if(!flag)
+//				{
+//					System.out.println("invalid date");
+//				}
 //				String destinationTime=scanner.next();
 //				
-				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
+				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 				 LocalDateTime arrivalDateAndTime =LocalDateTime.parse(arrivalDateAndTimeString, formatter);
                	LocalDateTime destinationDateAndTime =LocalDateTime.parse(destinationDateAndTimeString , formatter);
 				 
@@ -225,7 +257,12 @@ public class FMSClient {
 				String sourceAirportCode=scanner.nextLine();
 				Airport destinationAirport=Util.searchDestAirport(sourceAirportCode);
 				System.out.println(" enter the Arrival Date and Time in the following format dd/MM/yyyy HH:mm ");
-				String arrivalDateAndTimeString = scanner.next();
+				String arrivalDateAndTimeString = scanner.nextLine();
+//				flag = Util.validateDate(arrivalDateAndTimeString);
+//				if(!flag)
+//				{
+//					System.out.println("invalid date");
+//				}
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 				 LocalDateTime arrivalDateAndTime =LocalDateTime.parse(arrivalDateAndTimeString, formatter);
 //				System.out.println("Enter Date");
@@ -263,10 +300,11 @@ public class FMSClient {
 			}
 			catch(InputMismatchException e)
         	{
-        		System.out.println(" Choice should be integer ");
+        		System.err.println(" Choice should be integer ");
         		scanner.nextLine();
         	
         	}
+			
 			
 			
 			
